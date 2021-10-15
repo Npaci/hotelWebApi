@@ -2,36 +2,36 @@ package com.pngabo.hotelWebApi.services;
 
 import com.pngabo.hotelWebApi.exception.ElementAlreadyExistException;
 import com.pngabo.hotelWebApi.exception.ElementNotFoundException;
-import com.pngabo.hotelWebApi.form.ClientForm;
-import com.pngabo.hotelWebApi.mapper.ClientMapper;
-import com.pngabo.hotelWebApi.model.DTO.ClientDTO;
+import com.pngabo.hotelWebApi.form.ReservationForm;
+import com.pngabo.hotelWebApi.mapper.ReservationMapper;
+import com.pngabo.hotelWebApi.model.DTO.ReservationDTO;
 import com.pngabo.hotelWebApi.model.entities.Client;
-import com.pngabo.hotelWebApi.repositories.ClientRepository;
+import com.pngabo.hotelWebApi.model.entities.Reservation;
+import com.pngabo.hotelWebApi.repositories.ReservationRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ClientServiceImpl implements ClientService{
-    private ClientRepository repository;
-    private ClientMapper mapper;
+public class ReservationServiceImpl implements ReservationService{
+    private ReservationRepository repository;
+    private ReservationMapper mapper;
 
-    public ClientServiceImpl(ClientRepository repository, ClientMapper mapper) {
+    public ReservationServiceImpl(ReservationRepository repository, ReservationMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
     }
 
     @Override
-    public List<ClientDTO> getAll() {
+    public List<ReservationDTO> getAll() {
         return repository.findAll()
                 .stream().map(mapper::entyToDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public ClientDTO getOne(Long aLong) {
-
+    public ReservationDTO getOne(Long aLong) {
         if (!repository.existsById(aLong))
             throw new ElementNotFoundException();
 
@@ -41,22 +41,22 @@ public class ClientServiceImpl implements ClientService{
     }
 
     @Override
-    public ClientDTO insert(ClientForm form) {
+    public ReservationDTO insert(ReservationForm form) {
         if (repository.existsById(form.getId()))
             throw new ElementAlreadyExistException();
 
-        Client c = mapper.formToEntity(form);
-        repository.save(c);
+        Reservation toInsert = mapper.formToEntity(form);
+        repository.save(toInsert);
 
-        return mapper.entyToDTO(c);
+        return mapper.entyToDTO(toInsert);
     }
 
     @Override
-    public ClientDTO delete(Long aLong) {
+    public ReservationDTO delete(Long aLong) {
         if (!repository.existsById(aLong))
             throw new ElementNotFoundException();
 
-        Client toDelete = repository.findById(aLong)
+        Reservation toDelete = repository.findById(aLong)
                 .orElseThrow(ElementNotFoundException::new);
 
         repository.delete(toDelete);
@@ -65,11 +65,11 @@ public class ClientServiceImpl implements ClientService{
     }
 
     @Override
-    public ClientDTO update(ClientForm form) {
+    public ReservationDTO update(ReservationForm form) {
         if (!repository.existsById(form.getId()))
             throw new ElementNotFoundException();
 
-        Client toUpdate = mapper.formToEntity(form);
+        Reservation toUpdate = mapper.formToEntity(form);
         repository.save(toUpdate);
 
         return mapper.entyToDTO(toUpdate);

@@ -5,7 +5,7 @@ public enum TypeChambre {
     SUITE (350),
     PENTHOUSE (1000);
 
-    double prix;
+    public double prix;
 
     TypeChambre(double prix) {
         this.prix = prix;
