@@ -4,6 +4,7 @@ import com.pngabo.hotelWebApi.model.TypeChambre;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -24,4 +25,7 @@ public class Chambre {
     private TypeChambre type;
     @Column(nullable = false, columnDefinition = "DECIMAL(10,2)")
     private double prix;
+
+    @OneToMany(mappedBy = "chambre")
+    private List<Reservation> reservations;
 }

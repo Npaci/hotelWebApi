@@ -1,5 +1,6 @@
 package com.pngabo.hotelWebApi.model.DTO;
 
+import com.pngabo.hotelWebApi.model.entities.Reservation;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,4 +14,5 @@ public class ClientDTO {
     private String prenom;
     private String numTel;
     private List<String> moyenPayem;
+    private List<Reservation> reservations;
 }

@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -21,5 +22,11 @@ public class Reservation {
     private LocalDate  dateFin;
     @Column(nullable = false)
     private boolean dejeune;
+
+    @ManyToOne
+    private Chambre chambre;
+
+    @ManyToOne
+    private Client client;
 }
 

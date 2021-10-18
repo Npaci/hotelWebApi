@@ -21,4 +21,7 @@ public class Client {
     private String numTel;
     @ElementCollection(targetClass=String.class, fetch = FetchType.EAGER)
     private List<String> moyenPayem;
+
+    @OneToMany(mappedBy = "client")
+    private List<Reservation> reservations;
 }
